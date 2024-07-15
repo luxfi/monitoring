@@ -32,7 +32,7 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [
-        "Avalanche"
+        "Lux"
       ],
       "type": "dashboards"
     }
@@ -165,7 +165,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "(1 - avg(irate(node_cpu_seconds_total{job=~\"avalanchego-machine\", mode=\"idle\"}[1m])) by (instance)) * 100",
+          "expr": "(1 - avg(irate(node_cpu_seconds_total{job=~\"luxd-machine\", mode=\"idle\"}[1m])) by (instance)) * 100",
           "interval": "",
           "legendFormat": "CPU",
           "refId": "A"
@@ -178,7 +178,7 @@
       "datasource": {
         "type": "prometheus"
       },
-      "description": "Include I/O from applications other than AvalancheGo",
+      "description": "Include I/O from applications other than LuxGo",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -275,7 +275,7 @@
       "datasource": {
         "type": "prometheus"
       },
-      "description": "Includes I/O from applications other than AvalancheGo",
+      "description": "Includes I/O from applications other than LuxGo",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -495,7 +495,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "100 * (node_memory_MemTotal_bytes{job=~\"avalanchego-machine\"} - node_memory_MemFree_bytes{job=~\"avalanchego-machine\"} - node_memory_Buffers_bytes{job=~\"avalanchego-machine\"} - node_memory_Cached_bytes{job=~\"avalanchego-machine\"}) / node_memory_MemTotal_bytes{job=~\"avalanchego-machine\"}",
+          "expr": "100 * (node_memory_MemTotal_bytes{job=~\"luxd-machine\"} - node_memory_MemFree_bytes{job=~\"luxd-machine\"} - node_memory_Buffers_bytes{job=~\"luxd-machine\"} - node_memory_Cached_bytes{job=~\"luxd-machine\"}) / node_memory_MemTotal_bytes{job=~\"luxd-machine\"}",
           "interval": "",
           "legendFormat": "Memory",
           "refId": "A"
@@ -621,7 +621,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "max(((node_filesystem_size_bytes{job=~\"avalanchego-machine\", fstype=~\"ext4|vfat\"} - node_filesystem_free_bytes{job=~\"avalanchego-machine\", fstype=~\"ext4|vfat\"}) / node_filesystem_size_bytes{job=~\"avalanchego-machine\", fstype=~\"ext4|vfat\"}) * 100) by (instance)",
+          "expr": "max(((node_filesystem_size_bytes{job=~\"luxd-machine\", fstype=~\"ext4|vfat\"} - node_filesystem_free_bytes{job=~\"luxd-machine\", fstype=~\"ext4|vfat\"}) / node_filesystem_size_bytes{job=~\"luxd-machine\", fstype=~\"ext4|vfat\"}) * 100) by (instance)",
           "interval": "",
           "legendFormat": "Disk",
           "refId": "A"
@@ -709,7 +709,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "avalanche_process_go_goroutines{job=~\"avalanchego\"}",
+          "expr": "lux_process_go_goroutines{job=~\"luxd\"}",
           "interval": "",
           "legendFormat": "goroutines",
           "range": true,
@@ -724,7 +724,7 @@
   "schemaVersion": 36,
   "style": "dark",
   "tags": [
-    "Avalanche"
+    "Lux"
   ],
   "templating": {
     "list": [

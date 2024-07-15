@@ -1,1 +1,2 @@
-This repo contains tooling for monitoring Avalanche nodes.
+# monitoring
+This repo contains tooling for monitoring Lux nodes.

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Does a multi-step installation of Prometheus, Grafana, node_exporter and Avalanche dashboards
+# Does a multi-step installation of Prometheus, Grafana, node_exporter and Lux dashboards
 # Intended for non-technical validators, assumes running on compatible Ubuntu.
 
 #stop on errors
@@ -20,10 +20,10 @@ usage () {
   echo "   --1      Step 1: Installs Prometheus"
   echo "   --2      Step 2: Installs Grafana"
   echo "   --3      Step 3: Installs node_exporter"
-  echo "   --4      Step 4: Installs AvalancheGo Grafana dashboards"
+  echo "   --4      Step 4: Installs LuxGo Grafana dashboards"
   echo "   --5      Step 5: (Optional) Installs additional dashboards"
   echo ""
-  echo "Run without any options, script will download and install latest version of AvalancheGo dashboards."
+  echo "Run without any options, script will download and install latest version of LuxGo dashboards."
 }
 
 #helper function to check for presence of required commands, and install if missing
@@ -67,14 +67,14 @@ get_environment() {
 }
 
 install_prometheus() {
-  echo "AvalancheGo monitoring installer"
+  echo "LuxGo monitoring installer"
   echo "--------------------------------"
   echo "STEP 1: Installing Prometheus"
   echo
   get_environment
   check_reqs
-  mkdir -p /tmp/avalanche-monitoring-installer/prometheus
-  cd /tmp/avalanche-monitoring-installer/prometheus
+  mkdir -p /tmp/monitoring-installer/prometheus
+  cd /tmp/monitoring-installer/prometheus
 
   promFileName="$(curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest | grep -o "http.*linux-$getArch\.tar\.gz")"
   if [[ $(wget -S --spider "$promFileName"  2>&1 | grep 'HTTP/1.1 200 OK') ]]; then
@@ -137,15 +137,15 @@ install_prometheus() {
   echo "You can also check Prometheus web interface, available on http://your-node-host-ip:9090/"
   echo
   echo "If everything looks ok you can now continue with installing Grafana. Refer to the tutorial:"
-  echo "https://docs.avax.network/nodes/maintain/setting-up-node-monitoring#grafana"
+  echo "https://docs.lux.network/nodes/maintain/setting-up-node-monitoring#grafana"
   echo
-  echo "Reach out to us on https://chat.avax.network if you're having problems."
+  echo "Reach out to us on https://chat.lux.network if you're having problems."
 
   exit 0
 }
 
 install_grafana() {
-  echo "AvalancheGo monitoring installer"
+  echo "LuxGo monitoring installer"
   echo "--------------------------------"
   echo "STEP 2: Installing Grafana"
   echo
@@ -170,27 +170,27 @@ install_grafana() {
   echo "You can also check Grafana web interface, available on http://your-node-host-ip:3000/"
   echo
   echo "Now you need to set up Prometheus as a data source for Grafana. Refer to the tutorial:"
-  echo "https://docs.avax.network/nodes/maintain/setting-up-node-monitoring#exporter"
+  echo "https://docs.lux.network/nodes/maintain/setting-up-node-monitoring#exporter"
   echo
-  echo "Reach out to us on https://chat.avax.network if you're having problems."
+  echo "Reach out to us on https://chat.lux.network if you're having problems."
 
   exit 0
 }
 
 install_exporter() {
-  echo "AvalancheGo monitoring installer"
+  echo "LuxGo monitoring installer"
   echo "--------------------------------"
   echo "STEP 3: Installing node_exporter"
   echo
   get_environment
-  mkdir -p /tmp/avalanche-monitoring-installer/exporter_archive
-  cd /tmp/avalanche-monitoring-installer/exporter_archive
+  mkdir -p /tmp/monitoring-installer/exporter_archive
+  cd /tmp/monitoring-installer/exporter_archive
   echo "Dowloading archive..."
   nodeFileName="$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep -o "http.*linux-$getArch\.tar\.gz")"
   echo $nodeFileName
   wget -nv --show-progress -O node_exporter.tar.gz "$nodeFileName"
-  tar xvf node_exporter.tar.gz -C /tmp/avalanche-monitoring-installer/exporter_archive --strip-components=1
-  sudo mv /tmp/avalanche-monitoring-installer/exporter_archive/node_exporter /usr/local/bin
+  tar xvf node_exporter.tar.gz -C /tmp/monitoring-installer/exporter_archive --strip-components=1
+  sudo mv /tmp/monitoring-installer/exporter_archive/node_exporter /usr/local/bin
   echo "Installed, version:"
   node_exporter --version
   echo
@@ -244,11 +244,11 @@ install_exporter() {
 
   cp /etc/prometheus/prometheus.yml .
   {
-    echo "  - job_name: 'avalanchego'"
+    echo "  - job_name: 'luxd'"
     echo "    metrics_path: '/ext/metrics'"
     echo "    static_configs:"
     echo "      - targets: ['localhost:9650']"
-    echo "  - job_name: 'avalanchego-machine'"
+    echo "  - job_name: 'luxd-machine'"
     echo "    static_configs:"
     echo "      - targets: ['localhost:9100']"
     echo "        labels:"
@@ -264,27 +264,27 @@ install_exporter() {
   echo "sudo systemctl status node_exporter"
   echo
   echo "Now you need to set up Grafana dashboards next. Refer to the tutorial:"
-  echo "https://docs.avax.network/nodes/maintain/setting-up-node-monitoring#dashboards"
+  echo "https://docs.lux.network/nodes/maintain/setting-up-node-monitoring#dashboards"
   echo
-  echo "Reach out to us on https://chat.avax.network if you're having problems."
+  echo "Reach out to us on https://chat.lux.network if you're having problems."
 }
 
 install_dashboards() {
   #check for installation
   if test -f "/etc/grafana/grafana.ini"; then
-    echo "AvalancheGo monitoring installer"
+    echo "LuxGo monitoring installer"
     echo "--------------------------------"
   else
     echo "Node monitoring installation not found!"
     echo
     echo "Please refer to the tutorial:"
-    echo "https://docs.avax.network/nodes/maintain/setting-up-node-monitoring"
+    echo "https://docs.lux.network/nodes/maintain/setting-up-node-monitoring"
     echo
     usage
     exit 0
   fi
 
-  if test -f "/etc/grafana/provisioning/dashboards/avalanche.yaml"; then
+  if test -f "/etc/grafana/provisioning/dashboards/lux.yaml"; then
     echo "STEP 4: Installing Grafana dashboards"
     provisioningDone=true
     echo
@@ -295,18 +295,18 @@ install_dashboards() {
 
   echo
   echo "Downloading..."
-  mkdir -p /tmp/avalanche-monitoring-installer/dashboards-install
-  cd /tmp/avalanche-monitoring-installer/dashboards-install
+  mkdir -p /tmp/monitoring-installer/dashboards-install
+  cd /tmp/monitoring-installer/dashboards-install
 
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/c_chain.json
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/database.json
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/machine.json
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/main.json
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/network.json
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/p_chain.json
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/x_chain.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/c_chain.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/database.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/machine.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/main.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/network.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/p_chain.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/x_chain.json
   if test -f "/etc/grafana/dashboards/subnets.json"; then
-    wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/subnets.json
+    wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/subnets.json
   fi
 
   sudo mkdir -p /etc/grafana/dashboards
@@ -319,7 +319,7 @@ install_dashboards() {
       echo "apiVersion: 1"
       echo ""
       echo "providers:"
-      echo "  - name: 'Avalanche official'"
+      echo "  - name: 'Lux official'"
       echo "    orgId: 1"
       echo "    folder: ''"
       echo "    folderUid: ''"
@@ -330,8 +330,8 @@ install_dashboards() {
       echo "    options:"
       echo "      path: /etc/grafana/dashboards"
       echo "      foldersFromFilesStructure: true"
-    } >>avalanche.yaml
-    sudo cp avalanche.yaml /etc/grafana/provisioning/dashboards/
+    } >>lux.yaml
+    sudo cp lux.yaml /etc/grafana/provisioning/dashboards/
     echo "Provisioning datasource..."
     {
       echo "apiVersion: 1"
@@ -352,22 +352,22 @@ install_dashboards() {
   echo
   echo "Done!"
   echo
-  echo "AvalancheGo Grafana dashboards have been installed and updated."
+  echo "LuxGo Grafana dashboards have been installed and updated."
   echo "It might take up to 30s for new versions to show up in Grafana."
   echo
-  echo "Reach out to us on https://chat.avax.network if you're having problems."
+  echo "Reach out to us on https://chat.lux.network if you're having problems."
 }
 
 install_extras() {
   #check for installation
   if test -f "/etc/grafana/grafana.ini"; then
-    echo "AvalancheGo monitoring installer"
+    echo "LuxGo monitoring installer"
     echo "--------------------------------"
   else
     echo "Node monitoring installation not found!"
     echo
     echo "Please refer to the tutorial:"
-    echo "https://docs.avax.network/nodes/maintain/setting-up-node-monitoring"
+    echo "https://docs.lux.network/nodes/maintain/setting-up-node-monitoring"
     echo
     usage
     exit 0
@@ -376,10 +376,10 @@ install_extras() {
   echo "STEP 5: Installing additional dashboards"
   echo
   echo "Downloading..."
-  mkdir -p /tmp/avalanche-monitoring-installer/dashboards-install
-  cd /tmp/avalanche-monitoring-installer/dashboards-install
+  mkdir -p /tmp/monitoring-installer/dashboards-install
+  cd /tmp/monitoring-installer/dashboards-install
 
-  wget -nd -m -nv https://raw.githubusercontent.com/ava-labs/avalanche-monitoring/master/grafana/dashboards/subnets.json
+  wget -nd -m -nv https://raw.githubusercontent.com/luxfi/monitoring/master/grafana/dashboards/subnets.json
 
   sudo mkdir -p /etc/grafana/dashboards
   sudo cp subnets.json /etc/grafana/dashboards
@@ -406,7 +406,7 @@ then
       install_exporter
       exit 0
       ;;
-    --4) #install AvalancheGo dashboards
+    --4) #install LuxGo dashboards
       install_dashboards
       exit 0
       ;;

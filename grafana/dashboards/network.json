@@ -31,7 +31,7 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [
-        "Avalanche"
+        "Lux"
       ],
       "type": "dashboards"
     }
@@ -156,7 +156,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_node_uptime_weighted_average{job=\"avalanchego\"}",
+          "expr": "lux_network_node_uptime_weighted_average{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Uptime average {{node_id}}",
           "refId": "A"
@@ -263,7 +263,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_node_uptime_rewarding_stake{job=\"avalanchego\"}",
+          "expr": "lux_network_node_uptime_rewarding_stake{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Rewarding stake {{node_id}}",
           "refId": "A"
@@ -390,7 +390,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_peers{job=\"avalanchego\"}",
+          "expr": "lux_network_peers{job=\"luxd\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Peers connected {{node_id}}",
@@ -484,14 +484,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_requests_current_timeout{job=\"avalanchego\"}",
+          "expr": "lux_requests_current_timeout{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Timeout {{node_id}}",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "avalanche_requests_average_latency{job=\"avalanchego\"}",
+          "expr": "lux_requests_average_latency{job=\"luxd\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Response Time {{node_id}}",
@@ -583,7 +583,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_requests_outstanding{job=\"avalanchego\"}",
+          "expr": "lux_requests_outstanding{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Outstanding Requests {{node_id}}",
           "refId": "A"
@@ -677,7 +677,7 @@
       "pluginVersion": "8.0.3",
       "targets": [
         {
-          "expr": "rate(avalanche_network_msgs{io=\"received\", job=\"avalanchego\"}[1m])",
+          "expr": "rate(lux_network_msgs{io=\"received\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} compressed={{ compressed }} {{node_id}}",
           "refId": "A"
@@ -771,7 +771,7 @@
       "pluginVersion": "8.0.3",
       "targets": [
         {
-          "expr": "rate(avalanche_network_msgs{io=\"sent\", job=\"avalanchego\"}[1m])",
+          "expr": "rate(lux_network_msgs{io=\"sent\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} compressed={{ compressed }} {{node_id}}",
           "refId": "A"
@@ -866,7 +866,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "rate(avalanche_network_msgs_bytes{io=\"received\", job=\"avalanchego\"}[1m])",
+          "expr": "rate(lux_network_msgs_bytes{io=\"received\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A"
@@ -961,7 +961,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "rate(avalanche_network_msgs_bytes{io=\"sent\", job=\"avalanchego\"}[1m])",
+          "expr": "rate(lux_network_msgs_bytes{io=\"sent\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A"
@@ -1056,7 +1056,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "increase(avalanche_network_msgs_bytes{io=\"received\", job=\"avalanchego\"}[1m])",
+          "expr": "increase(lux_network_msgs_bytes{io=\"received\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A",
@@ -1066,7 +1066,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "increase(avalanche_network_msgs{io=\"received\", job=\"avalanchego\"}[1m])",
+          "expr": "increase(lux_network_msgs{io=\"received\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "B",
@@ -1172,7 +1172,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "increase(avalanche_network_msgs_bytes{io=\"sent\", job=\"avalanchego\"}[1m])",
+          "expr": "increase(lux_network_msgs_bytes{io=\"sent\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A",
@@ -1182,7 +1182,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "increase(avalanche_network_msgs{io=\"sent\", job=\"avalanchego\"}[1m])",
+          "expr": "increase(lux_network_msgs{io=\"sent\", job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "B",
@@ -1286,7 +1286,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum(increase(avalanche_network_msgs{io=\"sent\", op=~\"pull_query|push_query\", job=\"avalanchego\"}[5m]))",
+          "expr": "sum(increase(lux_network_msgs{io=\"sent\", op=~\"pull_query|push_query\", job=\"luxd\"}[5m]))",
           "interval": "",
           "legendFormat": "Messages {{node_id}}",
           "refId": "A",
@@ -1296,7 +1296,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum(increase(avalanche_snowman_blks_accepted_count{chain=~\"C|P|X\", job=\"avalanchego\"}[5m]))",
+          "expr": "sum(increase(lux_snowman_blks_accepted_count{chain=~\"C|P|X\", job=\"luxd\"}[5m]))",
           "interval": "",
           "legendFormat": "Messages {{node_id}}",
           "refId": "B",
@@ -1399,7 +1399,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_throttler_outbound_awaiting_release{job=\"avalanchego\"}",
+          "expr": "lux_network_throttler_outbound_awaiting_release{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Messages {{node_id}}",
           "refId": "A"
@@ -1412,7 +1412,7 @@
       "datasource": {
         "type": "prometheus"
       },
-      "description": "Amount of the stake in AVAX that is benched (ignored) because the nodes are unhealthy",
+      "description": "Amount of the stake in LUX that is benched (ignored) because the nodes are unhealthy",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1493,7 +1493,7 @@
       "pluginVersion": "8.0.3",
       "targets": [
         {
-          "expr": "avalanche_benchlist_benched_weight/1000000000",
+          "expr": "lux_benchlist_benched_weight/1000000000",
           "interval": "",
           "legendFormat": "{{ chain }} {{node_id}}",
           "refId": "A"
@@ -1601,7 +1601,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_byte_throttler_inbound_awaiting_acquire{job=\"avalanchego\"}",
+          "expr": "lux_network_byte_throttler_inbound_awaiting_acquire{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Messages Awaiting Acquire {{node_id}}",
           "refId": "A"
@@ -1695,7 +1695,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_byte_throttler_inbound_remaining_validator_bytes{job=\"avalanchego\"}",
+          "expr": "lux_network_byte_throttler_inbound_remaining_validator_bytes{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Bytes Remaining {{node_id}}",
           "refId": "A"
@@ -1784,7 +1784,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "increase(avalanche_network_byte_throttler_inbound_acquire_latency_sum{job=\"avalanchego\"}[2m])/increase(avalanche_network_byte_throttler_inbound_acquire_latency_count{job=\"avalanchego\"}[2m])",
+          "expr": "increase(lux_network_byte_throttler_inbound_acquire_latency_sum{job=\"luxd\"}[2m])/increase(lux_network_byte_throttler_inbound_acquire_latency_count{job=\"luxd\"}[2m])",
           "interval": "",
           "legendFormat": "Acquire {{node_id}}",
           "refId": "A"
@@ -1873,7 +1873,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "increase(avalanche_network_buffer_throttler_inbound_acquire_latency_sum{job=\"avalanchego\"}[2m])/increase(avalanche_network_buffer_throttler_inbound_acquire_latency_count{job=\"avalanchego\"}[2m])",
+          "expr": "increase(lux_network_buffer_throttler_inbound_acquire_latency_sum{job=\"luxd\"}[2m])/increase(lux_network_buffer_throttler_inbound_acquire_latency_count{job=\"luxd\"}[2m])",
           "interval": "",
           "legendFormat": "Acquire {{node_id}}",
           "refId": "A"
@@ -1965,7 +1965,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_byte_throttler_inbound_awaiting_release{job=\"avalanchego\"}",
+          "expr": "lux_network_byte_throttler_inbound_awaiting_release{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Messages Awaiting Release {{node_id}}",
           "refId": "A"
@@ -2056,7 +2056,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_buffer_throttler_inbound_awaiting_acquire{job=\"avalanchego\"}",
+          "expr": "lux_network_buffer_throttler_inbound_awaiting_acquire{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Messages Awaiting {{node_id}}",
           "refId": "A"
@@ -2149,7 +2149,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_byte_throttler_inbound_remaining_at_large_bytes{job=\"avalanchego\"}",
+          "expr": "lux_network_byte_throttler_inbound_remaining_at_large_bytes{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Remaining Bytes {{node_id}}",
           "refId": "A"
@@ -2241,7 +2241,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_bandwidth_throttler_inbound_awaiting_acquire{job=\"avalanchego\"}",
+          "expr": "lux_network_bandwidth_throttler_inbound_awaiting_acquire{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Messages Awaiting Acquire {{node_id}}",
           "refId": "A"
@@ -2350,7 +2350,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_throttler_outbound_remaining_at_large_bytes{job=\"avalanchego\"}",
+          "expr": "lux_network_throttler_outbound_remaining_at_large_bytes{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Bytes Remaining {{node_id}}",
           "refId": "A"
@@ -2439,7 +2439,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avalanche_network_throttler_outbound_remaining_validator_bytes{job=\"avalanchego\"}",
+          "expr": "lux_network_throttler_outbound_remaining_validator_bytes{job=\"luxd\"}",
           "interval": "",
           "legendFormat": "Bytes Remaining {{node_id}}",
           "refId": "A"
@@ -2547,7 +2547,7 @@
       "pluginVersion": "8.0.3",
       "targets": [
         {
-          "expr": "rate(avalanche_network_msgs_failed_to_send{job=\"avalanchego\"}[1m])",
+          "expr": "rate(lux_network_msgs_failed_to_send{job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A"
@@ -2634,7 +2634,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "increase(avalanche_network_msgs_failed_to_parse[1m])",
+          "expr": "increase(lux_network_msgs_failed_to_parse[1m])",
           "interval": "",
           "legendFormat": "Failed to Parse {{node_id}}",
           "refId": "A"
@@ -2725,7 +2725,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(increase(avalanche_handler_expired[1m]) or 0 * up)",
+          "expr": "sum(increase(lux_handler_expired[1m]) or 0 * up)",
           "interval": "",
           "legendFormat": "Messages Dropped {{node_id}}",
           "refId": "A"
@@ -2812,7 +2812,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "increase(avalanche_network_throttler_outbound_acquire_failures{job=\"avalanchego\"}[1m])",
+          "expr": "increase(lux_network_throttler_outbound_acquire_failures{job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "Messages Dropped {{node_id}}",
           "refId": "A"
@@ -2899,7 +2899,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "increase(avalanche_network_inbound_conn_throttler_rate_limited{job=\"avalanchego\"}[1m])",
+          "expr": "increase(lux_network_inbound_conn_throttler_rate_limited{job=\"luxd\"}[1m])",
           "interval": "",
           "legendFormat": "Rate-Limited {{node_id}}",
           "refId": "A"
@@ -3013,7 +3013,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "increase(avalanche_network_codec_compressed_duration{direction=\"compression\"}[5m])/increase(avalanche_network_codec_compressed_count{direction=\"compression\"}[5m])",
+          "expr": "increase(lux_network_codec_compressed_duration{direction=\"compression\"}[5m])/increase(lux_network_codec_compressed_count{direction=\"compression\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "{{ op }} {{ type }} {{node_id}}",
@@ -3110,7 +3110,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "increase(avalanche_network_codec_compressed_duration{direction=\"decompression\"}[5m])/increase(avalanche_network_codec_compressed_count{direction=\"decompression\"}[5m])",
+          "expr": "increase(lux_network_codec_compressed_duration{direction=\"decompression\"}[5m])/increase(lux_network_codec_compressed_count{direction=\"decompression\"}[5m])",
           "interval": "",
           "legendFormat": "{{ op }} {{ type }} {{node_id}}",
           "refId": "A"
@@ -3201,7 +3201,7 @@
       },
       "targets": [
         {
-          "expr": "rate(avalanche_network_msgs_bytes_saved[5m])",
+          "expr": "rate(lux_network_msgs_bytes_saved[5m])",
           "interval": "",
           "legendFormat": "{{ io }} {{ op }} {{node_id}}",
           "refId": "A"
@@ -3215,7 +3215,7 @@
   "schemaVersion": 37,
   "style": "dark",
   "tags": [
-    "Avalanche"
+    "Lux"
   ],
   "templating": {
     "list": [

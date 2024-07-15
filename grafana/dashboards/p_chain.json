@@ -31,7 +31,7 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [
-        "Avalanche"
+        "Lux"
       ],
       "type": "dashboards"
     }
@@ -125,7 +125,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "round(increase(avalanche_snowman_blks_accepted_count{chain=\"P\", job=\"avalanchego\"}[1m]))>0",
+          "expr": "round(increase(lux_snowman_blks_accepted_count{chain=\"P\", job=\"luxd\"}[1m]))>0",
           "interval": "",
           "legendFormat": "Blocks {{node_id}}",
           "refId": "A"
@@ -222,7 +222,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(avalanche_snowman_blks_rejected_count{chain=\"P\", job=\"avalanchego\"}[1m]))>0",
+          "expr": "round(increase(lux_snowman_blks_rejected_count{chain=\"P\", job=\"luxd\"}[1m]))>0",
           "interval": "",
           "legendFormat": "Blocks {{node_id}}",
           "range": true,
@@ -316,7 +316,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "rate(avalanche_snowman_blks_accepted_sum{chain=\"P\", job=\"avalanchego\"}[5m]) / rate(avalanche_snowman_blks_accepted_count{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_snowman_blks_accepted_sum{chain=\"P\", job=\"luxd\"}[5m]) / rate(lux_snowman_blks_accepted_count{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "Avg Acceptance Latency",
           "refId": "A"
@@ -412,7 +412,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "rate(avalanche_snowman_blks_rejected_sum{chain=\"P\", job=\"avalanchego\"}[5m]) / rate(avalanche_snowman_blks_rejected_count{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_snowman_blks_rejected_sum{chain=\"P\", job=\"luxd\"}[5m]) / rate(lux_snowman_blks_rejected_count{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "Avg Rejection Latency",
           "refId": "A"
@@ -503,7 +503,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "avalanche_snowman_blks_processing{chain=\"P\", job=\"avalanchego\"}>0",
+          "expr": "lux_snowman_blks_processing{chain=\"P\", job=\"luxd\"}>0",
           "interval": "",
           "legendFormat": "Blocks {{node_id}}",
           "refId": "A"
@@ -594,7 +594,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "avalanche_snowman_polls{chain=\"P\"} > 0",
+          "expr": "lux_snowman_polls{chain=\"P\"} > 0",
           "interval": "",
           "legendFormat": "Polls {{node_id}}",
           "refId": "A"
@@ -690,7 +690,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "rate(avalanche_handler_message_handling_time{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_handler_message_handling_time{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A"
@@ -788,7 +788,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "max(increase(avalanche_handler_messages{chain=\"P\", op=\"chits\", job=\"avalanchego\"}[5m]))",
+          "expr": "max(increase(lux_handler_messages{chain=\"P\", op=\"chits\", job=\"luxd\"}[5m]))",
           "hide": true,
           "refId": "A"
         },
@@ -796,7 +796,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "max(increase(avalanche_handler_messages{chain=\"P\", op=\"query_failed\", job=\"avalanchego\"}[5m]))",
+          "expr": "max(increase(lux_handler_messages{chain=\"P\", op=\"query_failed\", job=\"luxd\"}[5m]))",
           "hide": true,
           "refId": "B"
         },
@@ -900,7 +900,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "rate(avalanche_handler_message_handling_time{chain=\"P\", job=\"avalanchego\"}[5m])/rate(avalanche_handler_messages{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_handler_message_handling_time{chain=\"P\", job=\"luxd\"}[5m])/rate(lux_handler_messages{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A"
@@ -992,7 +992,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "avalanche_handler_sync_unprocessed_msgs_count{chain=\"P\"}",
+          "expr": "lux_handler_sync_unprocessed_msgs_count{chain=\"P\"}",
           "interval": "",
           "legendFormat": "{{ op }}",
           "refId": "A"
@@ -1002,7 +1002,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "avalanche_handler_async_unprocessed_msgs_count{chain=\"P\"}",
+          "expr": "lux_handler_async_unprocessed_msgs_count{chain=\"P\"}",
           "interval": "",
           "legendFormat": "{{ op }}",
           "refId": "B"
@@ -1094,7 +1094,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "increase(avalanche_handler_expired{chain=\"P\", job=\"avalanchego\"}[1m]) or 0 * up",
+          "expr": "increase(lux_handler_expired{chain=\"P\", job=\"luxd\"}[1m]) or 0 * up",
           "interval": "",
           "legendFormat": "{{ op }}",
           "refId": "A"
@@ -1191,13 +1191,13 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg_over_time(avalanche_benchlist_benched_weight{chain=\"P\", job=\"avalanchego\"}[15m]) / 10^9",
+          "expr": "avg_over_time(lux_benchlist_benched_weight{chain=\"P\", job=\"luxd\"}[15m]) / 10^9",
           "interval": "",
-          "legendFormat": "AVAX Benched {{node_id}}",
+          "legendFormat": "LUX Benched {{node_id}}",
           "refId": "A"
         }
       ],
-      "title": "AVAX Benched",
+      "title": "LUX Benched",
       "type": "timeseries"
     },
     {
@@ -1287,7 +1287,7 @@
             "type": "prometheus"
           },
           "exemplar": true,
-          "expr": "rate(avalanche_handler_messages{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_handler_messages{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ op }} {{node_id}}",
           "refId": "A"
@@ -1301,7 +1301,7 @@
   "schemaVersion": 37,
   "style": "dark",
   "tags": [
-    "Avalanche"
+    "Lux"
   ],
   "templating": {
     "list": [

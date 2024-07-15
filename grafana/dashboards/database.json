@@ -22,7 +22,7 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [
-        "Avalanche"
+        "Lux"
       ],
       "type": "dashboards"
     }
@@ -111,7 +111,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum(rate(avalanche_meterdb_size{chain=\"all\", method=~\"has|get|iterator_next\"}[5m]))",
+          "expr": "sum(rate(lux_meterdb_size{chain=\"all\", method=~\"has|get|iterator_next\"}[5m]))",
           "interval": "",
           "legendFormat": "Bytes Read {{node_id}}",
           "refId": "A"
@@ -204,7 +204,7 @@
           "datasource": {
             "type": "prometheus"
           },
-          "expr": "sum(rate(avalanche_meterdb_size{chain=\"all\", method=~\"put|delete|batch_write\"}[5m]))",
+          "expr": "sum(rate(lux_meterdb_size{chain=\"all\", method=~\"put|delete|batch_write\"}[5m]))",
           "interval": "",
           "legendFormat": "Bytes Written {{node_id}}",
           "refId": "A"
@@ -294,7 +294,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "rate(avalanche_meterdb_calls{chain=\"all\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_meterdb_calls{chain=\"all\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -385,7 +385,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "increase(avalanche_meterdb_duration{chain=\"all\", job=\"avalanchego\"}[5m])/increase(avalanche_meterdb_calls{chain=\"all\", job=\"avalanchego\"}[5m])",
+          "expr": "increase(lux_meterdb_duration{chain=\"all\", job=\"luxd\"}[5m])/increase(lux_meterdb_calls{chain=\"all\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -475,7 +475,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "rate(avalanche_meterdb_calls{chain=\"X\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_meterdb_calls{chain=\"X\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -566,7 +566,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "increase(avalanche_meterdb_duration{chain=\"X\", job=\"avalanchego\"}[5m])/increase(avalanche_meterdb_calls{chain=\"X\", job=\"avalanchego\"}[5m])",
+          "expr": "increase(lux_meterdb_duration{chain=\"X\", job=\"luxd\"}[5m])/increase(lux_meterdb_calls{chain=\"X\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -656,7 +656,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "rate(avalanche_meterdb_calls{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_meterdb_calls{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -747,7 +747,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "increase(avalanche_meterdb_duration{chain=\"P\", job=\"avalanchego\"}[5m])/increase(avalanche_meterdb_calls{chain=\"P\", job=\"avalanchego\"}[5m])",
+          "expr": "increase(lux_meterdb_duration{chain=\"P\", job=\"luxd\"}[5m])/increase(lux_meterdb_calls{chain=\"P\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -837,7 +837,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "rate(avalanche_meterdb_calls{chain=\"C\", job=\"avalanchego\"}[5m])",
+          "expr": "rate(lux_meterdb_calls{chain=\"C\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -928,7 +928,7 @@
       "pluginVersion": "8.0.5",
       "targets": [
         {
-          "expr": "increase(avalanche_meterdb_duration{chain=\"C\", job=\"avalanchego\"}[5m])/increase(avalanche_meterdb_calls{chain=\"C\", job=\"avalanchego\"}[5m])",
+          "expr": "increase(lux_meterdb_duration{chain=\"C\", job=\"luxd\"}[5m])/increase(lux_meterdb_calls{chain=\"C\", job=\"luxd\"}[5m])",
           "interval": "",
           "legendFormat": "{{ method }} {{node_id}}",
           "refId": "A"
@@ -944,7 +944,7 @@
   "schemaVersion": 30,
   "style": "dark",
   "tags": [
-    "Avalanche"
+    "Lux"
   ],
   "templating": {
     "list": [

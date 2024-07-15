@@ -28,7 +28,7 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [
-        "Avalanche"
+        "Lux"
       ],
       "targetBlank": false,
       "title": "",
@@ -166,7 +166,7 @@
   ],
   "schemaVersion": 39,
   "tags": [
-    "Avalanche"
+    "Lux"
   ],
   "templating": {
     "list": [
