@@ -1,0 +1,102 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # Docker containers logs
+  - job_name: docker
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*log
+    pipeline_stages:
+      - json:
+          expressions:
+            output: log
+            stream: stream
+            attrs:
+      - json:
+          expressions:
+            tag:
+          source: attrs
+      - regex:
+          expression: '(?P<container_name>(?:[^|]*))'
+          source: tag
+      - timestamp:
+          format: RFC3339Nano
+          source: time
+      - labels:
+          stream:
+          container_name:
+      - output:
+          source: output
+
+  # Lux node logs
+  - job_name: luxd
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: luxd
+          __path__: /avalanche-logs/network_current/node*/logs/*.log
+    pipeline_stages:
+      - multiline:
+          firstline: '^\[.*\]'
+      - regex:
+          expression: '^\[(?P<timestamp>.*?)\]\s+\[(?P<level>\w+)\]\s+(?P<logger>[\w\.]+)\s+(?P<message>.*)'
+      - labels:
+          level:
+          logger:
+      - timestamp:
+          format: '01-02|15:04:05.000'
+          source: timestamp
+
+  # System logs
+  - job_name: syslog
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          __path__: /var/log/syslog
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\w+\s+\d+\s+\d+:\d+:\d+)\s+(?P<hostname>\S+)\s+(?P<program>\S+?)(?:\[(?P<pid>\d+)\])?:\s+(?P<message>.*)'
+      - labels:
+          hostname:
+          program:
+      - timestamp:
+          format: 'Jan 2 15:04:05'
+          source: timestamp
+          location: 'Local'
+
+  # Explorer logs
+  - job_name: blockscout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: blockscout
+          network: lux
+          __path__: /var/lib/docker/containers/*/*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            output: log
+            stream: stream
+      - match:
+          selector: '{stream="stdout"}'
+          stages:
+            - regex:
+                expression: 'blockscout-lux'
+                drop: false
+      - labels:
+          stream:

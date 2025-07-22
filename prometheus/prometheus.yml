@@ -1,0 +1,109 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+rule_files:
+  - "alerts/*.yml"
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node exporter for system metrics
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Lux node metrics
+  - job_name: 'luxd'
+    metrics_path: '/ext/metrics'
+    static_configs:
+      - targets: ['luxd:9630', 'host.docker.internal:9630']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'lux-mainnet'
+
+  # C-Chain metrics (EVM)
+  - job_name: 'c-chain'
+    metrics_path: '/ext/bc/C/metrics'
+    static_configs:
+      - targets: ['luxd:9630', 'host.docker.internal:9630']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'c-chain-mainnet'
+
+  # C-Chain RPC metrics
+  - job_name: 'c-chain-rpc'
+    metrics_path: '/ext/bc/C/rpc'
+    params:
+      module: ['eth,web3,net,txpool']
+    static_configs:
+      - targets: ['luxd:9630', 'host.docker.internal:9630']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'c-chain-rpc'
+
+  # X-Chain metrics
+  - job_name: 'x-chain'
+    metrics_path: '/ext/bc/X/metrics'
+    static_configs:
+      - targets: ['luxd:9630', 'host.docker.internal:9630']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'x-chain-mainnet'
+
+  # P-Chain metrics (Platform Chain)
+  - job_name: 'p-chain'
+    metrics_path: '/ext/bc/P/metrics'
+    static_configs:
+      - targets: ['luxd:9630', 'host.docker.internal:9630']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'p-chain-mainnet'
+
+  # Health API metrics
+  - job_name: 'lux-health'
+    metrics_path: '/ext/health'
+    static_configs:
+      - targets: ['luxd:9630', 'host.docker.internal:9630']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'lux-health'
+
+  # Blockscout Explorer metrics
+  - job_name: 'blockscout-lux'
+    static_configs:
+      - targets: ['host.docker.internal:4000']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'blockscout-lux-mainnet'
+
+  # PostgreSQL metrics
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+
+  # Grafana metrics
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+
+  # Loki metrics
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']

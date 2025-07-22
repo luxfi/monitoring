@@ -1,0 +1,91 @@
+groups:
+  - name: lux_chain_alerts
+    interval: 30s
+    rules:
+      # Node availability
+      - alert: LuxNodeDown
+        expr: up{job="luxd"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Lux node is down"
+          description: "The Lux node has been down for more than 5 minutes."
+
+      # C-Chain alerts
+      - alert: CChainNotSyncing
+        expr: rate(avalanche_C_last_accepted_height[5m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "C-Chain is not syncing"
+          description: "C-Chain height has not increased in the last 10 minutes."
+
+      - alert: CChainHighRejectionRate
+        expr: rate(avalanche_C_blks_rejected_count[5m]) > rate(avalanche_C_blks_accepted_count[5m]) * 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "C-Chain high block rejection rate"
+          description: "C-Chain is rejecting more than 10% of blocks."
+
+      # P-Chain alerts
+      - alert: PChainNotSyncing
+        expr: rate(avalanche_P_last_accepted_height[5m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "P-Chain is not syncing"
+          description: "P-Chain height has not increased in the last 10 minutes."
+
+      # X-Chain alerts
+      - alert: XChainNotSyncing
+        expr: rate(avalanche_X_last_accepted_height[5m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "X-Chain is not syncing"
+          description: "X-Chain height has not increased in the last 10 minutes."
+
+      # Network connectivity
+      - alert: LowPeerCount
+        expr: avalanche_network_peers < 5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low peer count"
+          description: "Node has fewer than 5 peers connected."
+
+      # Resource alerts
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total{job="luxd"}[5m]) * 100 > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on Lux node"
+          description: "CPU usage is above 80% for more than 10 minutes."
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 90% for more than 10 minutes."
+
+      # Database alerts
+      - alert: PostgresDown
+        expr: up{job="postgres"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "PostgreSQL database has been down for more than 5 minutes."
